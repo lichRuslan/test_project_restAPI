@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Test Project</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+  
+</head>
+<body>
+    <h1 class="title">IIR  - a IIR rest API</h1>
+    <div id="homepage">
+        <h1>Hi</h1>
+        <div id="iir"></div>
+    </div>
+
+    <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script> -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script>
+        var Iirs = React.createClass({
+            getlnitialState: function(){
+                return({
+                    iirs:[]
+                });
+            },
+            render:function(){
+                var iirs = this.state.iirs;
+                iirs = iirs.map(function(iir,index){
+                    return(
+                        <li key={index}>
+                            <span className={iir.obj.available}></span>    
+                            <span className={name}>{iir.obj.name}</span>
+                            <span className={rank}>{iir.obj.rank}</span>
+                            <span className={dist}>{Math.floor(iir.dis / 1000)} km</span>
+                        </li> 
+                    );
+                });
+                return(
+                    <div id= "ii-container">
+                        <form id= "search" onSubmit={this.handleSubmit}>
+                            <label>Enter your latitude:</label>
+                            <input type = "text" ref = "lat" placeholder = "latitude" required />
+                            <label>Enter your longitude:</label>
+                            <input type = "text" ref = "lng" placeholder = "longitude" required />
+                            <input type="submit" value = "Find IIR" />
+                        </form>   
+                        <ul>{iirs}</ul>
+                    </div>
+                );
+            },
+            handleSubmit:function(e){
+                e.preventDefault();
+                var lng = this.refs.lng.value;
+                var lat = this.refs.lat.value;
+                fetch('/api/iirs?lng='+ lng + '&lat='+ lat).then(function(data){
+                    return data.json();
+                }).then(json => {
+                    this.setState({
+                        Iirs: json
+                    });
+                });
+            }
+        });
+        ReactDOM.render(<Iirs />, document.getElementById('iir'));
+    </script>
+</body>
+</html>
